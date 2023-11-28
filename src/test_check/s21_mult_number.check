@@ -1,0 +1,21 @@
+#test mult_number_test
+    matrix_t src_value1;
+    s21_create_matrix(2, 2, &src_value1);
+    for(int i=0; i<2; i++){
+        for(int j=0; j<2; j++){
+            src_value1.matrix[i][j] = (double)(i + 2);
+        }
+    }
+    matrix_t res_value1;
+    int result = s21_mult_number(&src_value1, 5.0, &res_value1);
+    ck_assert_int_eq(result, 0);
+    for(int i=0; i<2; i++){
+        for(int j=0; j<2; j++){
+            ck_assert_double_eq(res_value1.matrix[i][j],  src_value1.matrix[i][j] * 5.0);
+        }
+    }
+    s21_remove_matrix(&src_value1);
+    s21_remove_matrix(&res_value1);
+
+    result = s21_mult_number(NULL, 2, NULL);
+    ck_assert_int_eq(result, 1);

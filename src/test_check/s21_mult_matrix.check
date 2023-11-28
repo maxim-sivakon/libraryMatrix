@@ -1,0 +1,50 @@
+#test mult_matrix_test
+    matrix_t src_value1;
+    matrix_t src_value2;
+    s21_create_matrix(3, 2, &src_value1);
+    s21_create_matrix(2, 3, &src_value2);
+    double counter = 1.0;
+    for(int j=0; j<2; j++){
+        for(int i=0; i<3; i++){
+            src_value1.matrix[i][j] = counter;
+            counter += 1.0;
+        }
+    }
+    src_value2.matrix[0][0] = 1.0;
+    src_value2.matrix[0][1] = -1.0;
+    src_value2.matrix[0][2] = 1.0;
+    counter = 2.0;
+    for(int j=0; j<3; j++){
+        src_value2.matrix[1][j] = counter;
+        counter += 1.0;
+    }
+    matrix_t res_value1;
+    int result = s21_mult_matrix(&src_value1, &src_value2, &res_value1);
+    ck_assert_int_eq(result, 0);
+
+    for(int i=0; i<3; i++){
+        ck_assert_double_eq(res_value1.matrix[i][0], (double) (9.0 + i * 3.0));  
+    }
+    for(int i=0; i<3; i++){
+        ck_assert_double_eq(res_value1.matrix[i][1], (double) (11.0 + i * 2.0));  
+    }
+    for(int i=0; i<3; i++){
+        ck_assert_double_eq(res_value1.matrix[i][2], (double) (17.0 + i * 5.0));  
+    }
+    s21_remove_matrix(&src_value1);
+    s21_remove_matrix(&src_value2);
+    s21_remove_matrix(&res_value1);
+
+    matrix_t src_value3;
+    matrix_t src_value4;
+    s21_create_matrix(15, 8, &src_value3);
+    s21_create_matrix(3, 4, &src_value4);
+    matrix_t res_value2;
+    
+    result = s21_mult_matrix(&src_value3, &src_value4, &res_value2);
+    ck_assert_int_eq(result, 2);
+    s21_remove_matrix(&src_value3);
+    s21_remove_matrix(&src_value4);
+    
+    result = s21_mult_matrix(NULL, NULL, NULL);
+    ck_assert_int_eq(result, 1);

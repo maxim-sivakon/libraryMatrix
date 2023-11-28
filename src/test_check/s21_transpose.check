@@ -1,0 +1,25 @@
+#test transpose_test
+    matrix_t src_value1;
+    s21_create_matrix(3, 2, &src_value1);
+    double counter = 1.0;
+    for(int j=0; j<2; j++){
+        for(int i=0; i<3; i++){
+            src_value1.matrix[i][j] = counter;
+            counter += 1.0;
+        }
+    }
+    matrix_t res_value1;
+    int result = s21_transpose(&src_value1, &res_value1);
+    ck_assert_int_eq(result, 0);
+    counter = 1.0;
+    for(int i=0; i<2; i++){
+        for(int j=0; j<3; j++){
+            ck_assert_double_eq(res_value1.matrix[i][j], counter);
+            counter += 1.0;  
+        }
+    }
+    s21_remove_matrix(&src_value1);
+    s21_remove_matrix(&res_value1);
+    
+    result = s21_transpose(NULL, NULL);
+    ck_assert_int_eq(result, 1);

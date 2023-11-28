@@ -1,0 +1,7 @@
+#test remove_matrix_test
+    matrix_t res_value1;
+    s21_create_matrix(5, 5, &res_value1);
+    s21_remove_matrix(&res_value1);
+    ck_assert_ptr_null(res_value1.matrix);
+    ck_assert_int_eq(res_value1.rows, 0);
+    ck_assert_int_eq(res_value1.columns, 0);

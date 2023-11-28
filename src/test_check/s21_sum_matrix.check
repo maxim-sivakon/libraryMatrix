@@ -1,0 +1,36 @@
+#test sum_matrix_test
+    matrix_t src_value1;
+    matrix_t src_value2;
+    s21_create_matrix(2, 2, &src_value1);
+    s21_create_matrix(2, 2, &src_value2);
+    for(int i=0; i<2; i++){
+        for(int j=0; j<2; j++){
+            src_value1.matrix[i][j] = (double)(i * 2.0);
+            src_value2.matrix[i][j] = 5.0;
+        }
+    }
+    matrix_t res_value1;
+    int result = s21_sum_matrix(&src_value1, &src_value2, &res_value1);
+    ck_assert_int_eq(result, 0);
+    for(int i=0; i<2; i++){
+        for(int j=0; j<2; j++){
+            ck_assert_double_eq(res_value1.matrix[i][j], (double) (5.0 + i * 2.0));
+        }
+    }
+    s21_remove_matrix(&src_value1);
+    s21_remove_matrix(&src_value2);
+    s21_remove_matrix(&res_value1);
+
+    matrix_t src_value3;
+    matrix_t src_value4;
+    s21_create_matrix(9, 8, &src_value3);
+    s21_create_matrix(1, 1, &src_value4);
+    matrix_t res_value2;
+    
+    result = s21_sum_matrix(&src_value3, &src_value4, &res_value2);
+    ck_assert_int_eq(result, 2);
+    s21_remove_matrix(&src_value3);
+    s21_remove_matrix(&src_value4);
+
+    result = s21_sum_matrix(NULL, NULL, NULL);
+    ck_assert_int_eq(result, 1);

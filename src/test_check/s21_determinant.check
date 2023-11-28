@@ -1,0 +1,49 @@
+#test determinant_test
+    matrix_t src_value1;
+    s21_create_matrix(2, 2, &src_value1);
+    double counter = 1.0;
+    for(int i=0; i<2; i++){
+        for(int j=0; j<2; j++){
+            src_value1.matrix[i][j] = counter;
+            counter += 1.0;
+        }
+    }
+    double res_value1;
+    int result = s21_determinant(&src_value1, &res_value1);
+    ck_assert_int_eq(result, 0);
+    ck_assert_double_eq(res_value1, -2);
+    s21_remove_matrix(&src_value1);
+
+    result = s21_determinant(NULL, NULL);
+    ck_assert_int_eq(result, 1);
+
+    matrix_t src_value2;
+    s21_create_matrix(1, 1, &src_value2);
+    src_value2.matrix[0][0] = 9.0;
+    double res_value2;
+    result = s21_determinant(&src_value2, &res_value2);
+    ck_assert_int_eq(result, 0);
+    ck_assert_double_eq(res_value2, 9);
+    s21_remove_matrix(&src_value2);
+
+    matrix_t src_value3;
+    s21_create_matrix(9, 2, &src_value3);
+    double res_value3;
+    result = s21_determinant(&src_value3, &res_value3);
+    ck_assert_int_eq(result, 2);
+    s21_remove_matrix(&src_value3);
+
+    matrix_t src_value4;
+    s21_create_matrix(5, 5, &src_value4);
+    counter = 1.0;
+    for(int i=0; i<5; i++){
+        for(int j=0; j<5; j++){
+            src_value4.matrix[i][j] = counter;
+            counter += 1.0;
+        }
+    }
+    double res_value4;
+    result = s21_determinant(&src_value4, &res_value4);
+    ck_assert_int_eq(result, 0);
+    ck_assert_double_eq(res_value4, 0);
+    s21_remove_matrix(&src_value4);

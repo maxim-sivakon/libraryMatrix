@@ -1,0 +1,12 @@
+#test create_matrix_test
+    matrix_t res_value1;
+    int result = s21_create_matrix(5, 2, &res_value1);
+    ck_assert_int_eq(result, 0);
+    ck_assert_int_eq(res_value1.rows, 5);
+    ck_assert_int_eq(res_value1.columns, 2);
+    ck_assert_double_eq(res_value1.matrix[0][0], 0);
+    s21_remove_matrix(&res_value1);
+
+    matrix_t res_value2;
+    result = s21_create_matrix(-22, 100, &res_value2);
+    ck_assert_int_eq(result, 1);
